@@ -72,6 +72,7 @@ namespace JumpMod
                     GameManager.GetFatigueComponent().AddFatigue(Settings.options.fatigueCost);
 
                     GameManager.GetVpFPSPlayer().Controller.Jump();
+                    if (Utils.RollChance(5)) GameManager.GetPlayerVoiceComponent().Play("Play_VOLandLevel1", Il2CppVoice.Priority.Normal);
                 }
 
                 else
