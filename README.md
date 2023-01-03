@@ -1,5 +1,5 @@
 # Jump
-Mod for The Long Dark that let's you jump! 
+Mod for The Long Dark that lets you jump! 
 
 New and improved iteration (previously by DigitalZombie)
 # About
