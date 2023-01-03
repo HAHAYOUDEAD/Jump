@@ -1,7 +1,10 @@
 # Jump
 Mod for The Long Dark that lets you jump! 
 
-https://user-images.githubusercontent.com/46863862/210350549-71bf2d52-9092-4b98-821c-4fd181522814.mp4
+
+https://user-images.githubusercontent.com/46863862/210351318-eac7ee87-cb62-4af1-bced-6059cf148404.mp4
+
+
 
 New and improved iteration (previously by DigitalZombie)
 # About
