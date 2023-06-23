@@ -38,7 +38,7 @@ namespace JumpMod
                      GameManager.GetHungerComponent().GetHungerLevel() != HungerLevel.Starving && // not starving
                      GameManager.GetInventoryComponent().GetTotalWeightKG() < Settings.options.weightUpperLimit + Settings.options.weightUpperLimit * 0.334f && // not overburdened
                      GameManager.GetThirstComponent().GetThirstLevel() != ThirstLevel.Dehydrated && // hydrated
-                     GameManager.GetPlayerMovementComponent().GetSprintStamina() >= Settings.options.staminaCost * staminaLeewayPercent && // has stamina
+                     GameManager.GetPlayerMovementComponent().m_SprintStamina >= Settings.options.staminaCost * staminaLeewayPercent && // has stamina
                      GameManager.GetFatigueComponent().GetFatigueLevel() != FatigueLevel.Exhausted; // not exhausted
 
                 if (flag2)
@@ -60,7 +60,7 @@ namespace JumpMod
                     }
 
                     // deduct stamina
-                    float currentStamina = GameManager.GetPlayerMovementComponent().GetSprintStamina();
+                    float currentStamina = GameManager.GetPlayerMovementComponent().m_SprintStamina;
                     if (currentStamina < Settings.options.staminaCost && currentStamina > Settings.options.staminaCost / 2f)
                     {
                         GameManager.GetPlayerMovementComponent().AddSprintStamina(-currentStamina);
@@ -108,7 +108,7 @@ namespace JumpMod
                         return;
                     }
 
-                    if (GameManager.GetPlayerMovementComponent().GetSprintStamina() < Settings.options.staminaCost * staminaLeewayPercent)
+                    if (GameManager.GetPlayerMovementComponent().m_SprintStamina < Settings.options.staminaCost * staminaLeewayPercent)
                     {
                         JumpModMain.ShowStaminaBar(true, true, 0.5f);
                     }
