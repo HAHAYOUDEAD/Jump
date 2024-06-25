@@ -24,26 +24,32 @@ namespace JumpMod
             {
                 //MelonLogger.Msg("jump");
 
+
+                float currentWeightLimit = Settings.options.weightUpperLimit;
+                //float currentWeightLimit = GameManager.GetEncumberComponent().m_MaxCarryCapacityKG;
+
                 float jumpHeight = Settings.options.jumpHeightConst / 100f;
 
-                if (GameManager.GetPlayerManagerComponent().m_God) // ignore calculations if in god mode
+                if (GameManager.GetPlayerManagerComponent().m_God || Settings.options.jumpKing) // ignore calculations if in god mode
                 {
                     GameManager.GetVpFPSPlayer().Controller.MotorJumpForce = jumpHeight;
                     GameManager.GetVpFPSPlayer().Controller.Jump();
                     return;
+                    
                 }
 
                 //GameManager.GetHungerComponent().GetCalorieReserved() >= 250f && 
                 bool flag2 = !GameManager.GetSprainedAnkleComponent().HasSprainedAnkle() && // no sprain
                      GameManager.GetHungerComponent().GetHungerLevel() != HungerLevel.Starving && // not starving
-                     GameManager.GetInventoryComponent().GetTotalWeightKG() < Settings.options.weightUpperLimit + Settings.options.weightUpperLimit * 0.334f && // not overburdened
+                     //GameManager.GetInventoryComponent().GetTotalWeightKG() < Settings.options.weightUpperLimit + Settings.options.weightUpperLimit * 0.334f && // not overburdened
+                     GameManager.GetInventoryComponent().GetTotalWeightKG().ToQuantity(1f) < currentWeightLimit + currentWeightLimit * 0.334f && // not overburdened
                      GameManager.GetThirstComponent().GetThirstLevel() != ThirstLevel.Dehydrated && // hydrated
                      GameManager.GetPlayerMovementComponent().m_SprintStamina >= Settings.options.staminaCost * staminaLeewayPercent && // has stamina
                      GameManager.GetFatigueComponent().GetFatigueLevel() != FatigueLevel.Exhausted; // not exhausted
 
                 if (flag2)
                 {
-                    float burdenPercent = GameManager.GetInventoryComponent().GetTotalWeightKG() / Settings.options.weightUpperLimit * 100f;
+                    float burdenPercent = GameManager.GetInventoryComponent().GetTotalWeightKG().ToQuantity(1f) / currentWeightLimit * 100f;
                     float jumpMult = 100f / (1f + Mathf.Pow(burdenPercent / 115f, 10f)) / 100f;
                     GameManager.GetVpFPSPlayer().Controller.MotorJumpForce = jumpHeight * jumpMult; // apply jump power
 
@@ -83,7 +89,7 @@ namespace JumpMod
                         return;
                     }
 
-                    if (GameManager.GetInventoryComponent().GetTotalWeightKG() >= Settings.options.weightUpperLimit + Settings.options.weightUpperLimit * 0.334f)
+                    if (GameManager.GetInventoryComponent().GetTotalWeightKG().ToQuantity(1f) >= currentWeightLimit + currentWeightLimit * 0.334f)
                     {
                         HUDMessage.AddMessage("You can't jump when overencumbered", true, true);
                         return;
@@ -112,9 +118,6 @@ namespace JumpMod
                     {
                         JumpModMain.ShowStaminaBar(true, true, 0.5f);
                     }
-
-
-
                 }
             }
         }
